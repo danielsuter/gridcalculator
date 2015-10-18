@@ -6,8 +6,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.io.FileUtils;
-
 import ch.daniel.karateseon.gridcalculator.filter.FilterCriteria;
 import ch.daniel.karateseon.gridcalculator.filter.ParticipantsFilter;
 import ch.daniel.karateseon.gridcalculator.model.Grid;
@@ -37,8 +35,6 @@ public class DrawingCalculator {
 
 		Iterable<Group> groups = filter.createGroups(participants, filters);
 		
-		
-		
 		for (Group group : groups) {
 			Grid grid = gridCalculator.calculateGrid(group.clone());
 			FilterCriteria criteria = group.getFilterCriteria();
@@ -46,15 +42,17 @@ public class DrawingCalculator {
 			writer.write(grid, criteria, gridFile, null);
 			writer.writeGroupSheet(group.getAll(), criteria, getOutputFile(criteria, GROUP_SHEET_SUFFIX));
 			
-			copyGridToClubFolder(group, gridFile);
+			generateClubGridFile(group, grid, criteria, gridFile);
 		}
 	}
 
-	private void copyGridToClubFolder(Group group, File gridFile) throws IOException {
-		Set<String> clubsInThisGroup = group.getClubs();
-		for (String club : clubsInThisGroup) {
-			File clubOutputDirectory = new File(outputDirectory, club);
-			FileUtils.copyFile(gridFile, new File(clubOutputDirectory, gridFile.getName()));
+	private void generateClubGridFile(Group group, Grid grid, FilterCriteria criteria, File gridFile) {
+		Set<String> clubs = group.getClubs();
+		for (String club : clubs) {
+			File clubDirectory = new File(outputDirectory, club);
+			clubDirectory.mkdir();
+			File clubGridFile = new File(clubDirectory, gridFile.getName());
+			writer.write(grid, criteria, clubGridFile, club);
 		}
 	}
 

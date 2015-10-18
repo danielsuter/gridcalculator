@@ -62,7 +62,7 @@ public class TinyTemplate extends DrawingTemplate {
 			participantCells[3].setCellValue(formattedParticipant);
 		}
 		participantClubCells[positionIndex].setCellValue(participant.getClub());
-//		throw new RuntimeException("color not yet implemented");
+		
+		applyParticipantMarking(participantCells[positionIndex], isMarked);
 	}
-
 }

@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -32,6 +35,16 @@ public abstract class DrawingTemplate {
 
 	public abstract void setParticipant(int positionIndex, Participant participant, boolean isMarked);
 
+	protected void applyParticipantMarking(Cell participantCell, boolean isMarked) {
+		if(isMarked) {
+			CellStyle style = templateWorkbook.createCellStyle();
+			style.cloneStyleFrom(participantCell.getCellStyle());
+			style.setFillForegroundColor(IndexedColors.YELLOW.getIndex());
+			style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+			participantCell.setCellStyle(style);
+		}
+	}
+	
 	public Workbook getWorkbook() {
 		return templateWorkbook;
 	}

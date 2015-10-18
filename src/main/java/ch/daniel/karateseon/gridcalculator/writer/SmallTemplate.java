@@ -58,7 +58,7 @@ public class SmallTemplate extends DrawingTemplate {
 	public void setParticipant(int positionIndex, Participant participant, boolean isMarked) {
 		participantCells[positionIndex].setCellValue(GridCalculatorFormatter.formatForGrid(participant));
 		participantClubCells[positionIndex].setCellValue(participant.getClub());
-		//throw new RuntimeException("color not yet implemented");
+		applyParticipantMarking(participantCells[positionIndex], isMarked);
 	}
 
 }
