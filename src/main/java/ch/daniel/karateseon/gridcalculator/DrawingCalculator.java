@@ -39,12 +39,6 @@ public class DrawingCalculator {
 			FilterCriteria criteria = group.getFilterCriteria();
 			writer.write(grid, criteria, getOutputFile(criteria, DRAWING_SUFFIX), null);
 			writer.writeGroupSheet(group.getAll(), criteria, getOutputFile(criteria, GROUP_SHEET_SUFFIX));
-//			throw new RuntimeException("color not yet implemented");
-		}
-		
-		System.out.println("Sizes");
-		for (Group group : groups) {
-			System.out.println(group.getSize());
 		}
 	}
 

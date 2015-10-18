@@ -15,8 +15,14 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 		DrawingCalculator calculator = new DrawingCalculator("F:\\development\\temp\\output");
-		List<FilterCriteria> filters = Lists.newLinkedList();
 
+		List<FilterCriteria> filters = createFilters();
+		
+		calculator.calculateGrid(new File("F:\\development\\temp\\testliste\\teilnehmer.xlsx"), filters);
+	}
+
+	private static List<FilterCriteria> createFilters() {
+		List<FilterCriteria> filters = Lists.newLinkedList();
 		filters.add(FilterCriteria.createKata(Gender.MALE, 1998, 2001, Level.UPPER_STAGE));
 		filters.add(FilterCriteria.createKata(Gender.MALE, 2001, 2003, Level.UPPER_STAGE));
 		filters.add(FilterCriteria.createKata(Gender.MALE, 2003, 2006, Level.UPPER_STAGE));
@@ -45,8 +51,7 @@ public class Main {
 		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 2002, 2005, 0, 40, "leicht"));
 		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 2002, 2005, 40, Double.MAX_VALUE, "schwer"));
 		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 2005, 2007, 0, Double.MAX_VALUE, ""));
-		
-		calculator.calculateGrid(new File("F:\\development\\temp\\testliste\\teilnehmer.xlsx"), filters);
+		return filters;
 	}
 
 }
