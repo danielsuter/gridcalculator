@@ -51,12 +51,4 @@ public class DrawingCalculator {
 	private File getOutputFile(FilterCriteria criteria, String suffix) {
 		return new File(outputDirectory, GridCalculatorFormatter.formatForFilename(criteria, suffix) + EXCEL_EXTENSION);
 	}
-	
-	public Iterable<Grid> calculateGrids(File participantsFile, List<FilterCriteria> filters) {
-		throw new RuntimeException("not implemented");
-	}
-	
-	public void calculateExcels(Iterable<Grid> grids, File outputDirectory) {
-		throw new RuntimeException("not implemented");
-	}
 }

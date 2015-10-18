@@ -318,6 +318,8 @@ public class DrawingsTab extends JPanel implements Observer<MainModel>, ActionLi
 		case PROCESSING_STOPPED:
 			hideProcessing();
 			break;
+		default:
+			break;
 		}
 	}
 

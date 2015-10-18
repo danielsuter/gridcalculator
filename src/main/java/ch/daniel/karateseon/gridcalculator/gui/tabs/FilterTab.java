@@ -147,6 +147,8 @@ public class FilterTab extends JPanel implements Observer<MainModel>, ActionList
 		case CLEAR_FILTERS:
 			clearAll();
 			break;
+		default:
+			break;
 		}
 	}
 
@@ -208,6 +210,8 @@ public class FilterTab extends JPanel implements Observer<MainModel>, ActionList
 			case ADD:
 				mainWindow.getController().addFilter(addFilterDialog.getFilter());
 				break;
+			default:
+				break;
 			}
 		} else if (ActionCommands.DELETE_KATA.equals(e.getActionCommand())) {
 			int selectedRow = kataTable.getSelectedRow();
@@ -221,6 +225,8 @@ public class FilterTab extends JPanel implements Observer<MainModel>, ActionList
 			switch (addFilterDialog.getOperationState()) {
 			case ADD:
 				mainWindow.getController().addFilter(addFilterDialog.getFilter());
+				break;
+			default:
 				break;
 			}
 		} else if (ActionCommands.DELETE_KUMITE.equals(e.getActionCommand())) {
