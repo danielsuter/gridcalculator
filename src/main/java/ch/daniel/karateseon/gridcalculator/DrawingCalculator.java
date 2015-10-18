@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.io.FileUtils;
 
 import ch.daniel.karateseon.gridcalculator.filter.FilterCriteria;
 import ch.daniel.karateseon.gridcalculator.filter.ParticipantsFilter;
@@ -33,12 +36,25 @@ public class DrawingCalculator {
 		Iterable<Participant> participants = reader.readParticipantsFromExcel(participantsFile);
 
 		Iterable<Group> groups = filter.createGroups(participants, filters);
-
+		
+		
+		
 		for (Group group : groups) {
 			Grid grid = gridCalculator.calculateGrid(group.clone());
 			FilterCriteria criteria = group.getFilterCriteria();
-			writer.write(grid, criteria, getOutputFile(criteria, DRAWING_SUFFIX), null);
+			File gridFile = getOutputFile(criteria, DRAWING_SUFFIX);
+			writer.write(grid, criteria, gridFile, null);
 			writer.writeGroupSheet(group.getAll(), criteria, getOutputFile(criteria, GROUP_SHEET_SUFFIX));
+			
+			copyGridToClubFolder(group, gridFile);
+		}
+	}
+
+	private void copyGridToClubFolder(Group group, File gridFile) throws IOException {
+		Set<String> clubsInThisGroup = group.getClubs();
+		for (String club : clubsInThisGroup) {
+			File clubOutputDirectory = new File(outputDirectory, club);
+			FileUtils.copyFile(gridFile, new File(clubOutputDirectory, gridFile.getName()));
 		}
 	}
 
