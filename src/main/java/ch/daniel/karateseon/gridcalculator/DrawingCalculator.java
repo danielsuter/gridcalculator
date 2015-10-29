@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.log4j.Logger;
+
 import ch.daniel.karateseon.gridcalculator.filter.FilterCriteria;
 import ch.daniel.karateseon.gridcalculator.filter.ParticipantsFilter;
 import ch.daniel.karateseon.gridcalculator.model.Grid;
@@ -15,6 +17,8 @@ import ch.daniel.karateseon.gridcalculator.util.GridCalculatorFormatter;
 import ch.daniel.karateseon.gridcalculator.writer.ExcelWriter;
 
 public class DrawingCalculator {
+	private final static Logger LOGGER = Logger.getLogger(DrawingCalculator.class);
+	
 	private static final String DRAWING_SUFFIX = "drawing";
 	private static final String GROUP_SHEET_SUFFIX = "group";
 	private static final String EXCEL_EXTENSION = ".xlsx";
@@ -36,6 +40,8 @@ public class DrawingCalculator {
 		Iterable<Group> groups = filter.createGroups(participants, filters);
 		
 		for (Group group : groups) {
+			LOGGER.info(group.toSummaryString());
+			
 			Grid grid = gridCalculator.calculateGrid(group.clone());
 			FilterCriteria criteria = group.getFilterCriteria();
 			File gridFile = getOutputFile(criteria, DRAWING_SUFFIX);

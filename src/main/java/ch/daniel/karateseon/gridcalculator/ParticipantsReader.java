@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -61,7 +62,8 @@ public class ParticipantsReader {
 		if(currentRow == null) return false;
 		
 		boolean yearIsAvailable = currentRow.getCell(YEAR_COLUMN_INDEX) != null;
-		boolean lastnameIsAvailable = !ExcelUtils.getStringCellValue(currentRow.getCell(LASTNAME_COLUMN_INDEX)).equals("");
+		Cell lastnameCell = currentRow.getCell(LASTNAME_COLUMN_INDEX);
+		boolean lastnameIsAvailable = StringUtils.isNotBlank(ExcelUtils.getStringCellValue(lastnameCell));
 		return yearIsAvailable && lastnameIsAvailable;
 	}
 

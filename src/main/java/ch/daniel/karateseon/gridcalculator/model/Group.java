@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.Set;
 
 import ch.daniel.karateseon.gridcalculator.filter.FilterCriteria;
+import ch.daniel.karateseon.gridcalculator.util.GridCalculatorFormatter;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
@@ -167,6 +168,11 @@ public class Group implements Cloneable {
 			sb.append("\t").append(participant).append("\n");
 		}
 		return sb.toString();
+	}
+	
+	public String toSummaryString() {
+		String groupName = GridCalculatorFormatter.formatForGroupSheetHeader(filterCriteria);
+		return groupName + " (" + participants.size() + ")";
 	}
 
 	public FilterCriteria getFilterCriteria() {

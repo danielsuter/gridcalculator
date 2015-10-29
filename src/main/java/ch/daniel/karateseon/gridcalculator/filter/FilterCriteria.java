@@ -29,6 +29,11 @@ public class FilterCriteria {
 	 */
 	public static FilterCriteria createKumite(Gender gender, int fromYear, int toYear, double fromWeight,
 			double toWeight, String weightString) {
+		return createKumite(gender, fromYear, toYear, fromWeight, toWeight, null, weightString);
+	}
+	
+	public static FilterCriteria createKumite(Gender gender, int fromYear, int toYear, double fromWeight,
+			double toWeight, Level level, String weightString) {
 		FilterCriteria criteria = new FilterCriteria();
 		criteria.fightType = FightType.KUMITE;
 		criteria.gender = gender;
@@ -37,6 +42,7 @@ public class FilterCriteria {
 		criteria.fromWeight = fromWeight;
 		criteria.toWeight = toWeight;
 		criteria.weightString = weightString;
+		criteria.level = level;
 		return criteria;
 	}
 
