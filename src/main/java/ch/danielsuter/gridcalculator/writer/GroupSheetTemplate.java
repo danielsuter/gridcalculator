@@ -4,10 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import com.google.common.base.Preconditions;
@@ -54,27 +51,43 @@ public class GroupSheetTemplate {
 
 		for (Participant participant : participants) {
 			Row row = templateSheet.createRow(currentRow);
-			writeCell(row, participant.getLastname(), LASTNAME_COLUM_INDEX);
-			writeCell(row, participant.getFirstname(), FIRSTNAME_COLUM_INDEX);
-			writeCell(row, participant.getClub(), CLUB_COLUM_INDEX);
+			boolean colored = row.getRowNum() % 2 == 0;
+			writeCell(row, participant.getLastname(), LASTNAME_COLUM_INDEX, colored);
+			writeCell(row, participant.getFirstname(), FIRSTNAME_COLUM_INDEX, colored);
+			writeCell(row, participant.getClub(), CLUB_COLUM_INDEX, colored);
 			if(participant.getWeight() != null) {
-				writeCell(row, participant.getWeight(), WEIGHT_COLUM_INDEX);
+				writeCell(row, participant.getWeight(), WEIGHT_COLUM_INDEX, colored);
 			}
 
 			currentRow++;
 		}
 	}
 
-	private Row writeCell(Row row, String value, int columnIndex) {
+	private Row writeCell(Row row, String value, int columnIndex, boolean colored) {
 		Cell cell = row.createCell(columnIndex, Cell.CELL_TYPE_STRING);
 		cell.setCellValue(value);
+		if(colored) {
+			applyBackgroundColor(cell);
+		}
+
 		return row;
 	}
 
-	private Row writeCell(Row row, double value, int columnIndex) {
+	private Row writeCell(Row row, double value, int columnIndex, boolean colored) {
 		Cell cell = row.createCell(columnIndex, Cell.CELL_TYPE_NUMERIC);
 		cell.setCellValue(value);
+		if(colored) {
+			applyBackgroundColor(cell);
+		}
 		return row;
+	}
+
+	private void applyBackgroundColor(Cell cell) {
+		CellStyle style = templateWorkbook.createCellStyle();
+		style.cloneStyleFrom(cell.getCellStyle());
+		style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+		style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		cell.setCellStyle(style);
 	}
 
 	public Workbook getWorkbook() {
