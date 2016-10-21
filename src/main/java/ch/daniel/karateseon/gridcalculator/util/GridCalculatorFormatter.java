@@ -29,13 +29,13 @@ public class GridCalculatorFormatter {
 	}
 
 	private static String formatForKumiteGroupSheetHeader(FilterCriteria criteria) {
-		String levelString = criteria.getLevel() == null ? ""  : criteria.getLevel().toGerman();
+		String levelString = criteria.getLevel() == null ? ""  : " " + criteria.getLevel().toGerman();
 		
 		if(criteria.getWeightString() == null) {
-			return String.format("%s %s %s %d-%d", criteria.getFightType().toCamelCase(), criteria
+			return String.format("%s %s%s %d-%d", criteria.getFightType().toCamelCase(), criteria
 					.getGender().toGerman(), levelString, criteria.getFromYear(), criteria.getToYear() - 1);
 		} else {
-			return String.format("%s %s %s %d-%d %s", criteria.getFightType().toCamelCase(), criteria
+			return String.format("%s %s%s %d-%d %s", criteria.getFightType().toCamelCase(), criteria
 					.getGender().toGerman(), levelString, criteria.getFromYear(), criteria.getToYear() - 1,
 					criteria.getWeightString());
 		}
@@ -70,12 +70,12 @@ public class GridCalculatorFormatter {
 	}
 
 	private static String formatForKumiteFilename(FilterCriteria criteria, String suffix) {
-		String levelString = criteria.getLevel() == null ? "" : criteria.getLevel().toGerman();
+		String levelString = criteria.getLevel() == null ? "" : criteria.getLevel().toGerman() + "-";
 		if (criteria.getWeightString() == null) {
-			return String.format("%s-%s-%s-%d_%d-%s", criteria.getFightType(), criteria.getGender(),
+			return String.format("%s-%s-%s%d_%d-%s", criteria.getFightType(), criteria.getGender(),
 					levelString, criteria.getFromYear(), criteria.getToYear() - 1, suffix).toLowerCase();
 		} else {
-			return String.format("%s-%s-%s-%d_%d-%s-%s", criteria.getFightType(), criteria.getGender(),
+			return String.format("%s-%s-%s%d_%d-%s-%s", criteria.getFightType(), criteria.getGender(),
 					levelString, criteria.getFromYear(), criteria.getToYear() - 1, criteria.getWeightString(), suffix)
 					.toLowerCase();
 		}
