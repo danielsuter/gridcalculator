@@ -1,8 +1,10 @@
 package ch.danielsuter.gridcalculator;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 import ch.danielsuter.gridcalculator.model.Level;
@@ -16,20 +18,36 @@ import ch.danielsuter.gridcalculator.model.Gender;
 public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
-		File outputDirectory = new File("F:\\development\\temp\\output");
-		FileUtils.deleteDirectory(outputDirectory);
-		outputDirectory.mkdirs();
+		File outputDirectory = Files.createTempDirectory("tournamentGrids").toFile();
+		System.out.println(outputDirectory);
+
 		DrawingCalculator calculator = new DrawingCalculator(outputDirectory.getAbsolutePath());
 		
-		List<FilterCriteria> filters = create2015Filters();
+		List<FilterCriteria> filters = create2016Filters();
 		
 		//calculator.calculateGrid(new File("F:\\development\\temp\\testliste\\teilnehmer.xlsx"), filters);
 		// C:\Users\suter\Google Drive\Tomokai Turnier Lenzburg\2015\Anmeldung
-		calculator.calculateGrid(new File("C:\\Users\\suter\\Google Drive\\Tomokai Turnier Lenzburg\\2015\\Anmeldung\\teilnehmer.xlsx"), filters);
+		calculator.calculateGrid(new File("C:\\Users\\dsu\\Documents\\Shinseikan\\Anmeldelisten\\teilnehmer.xlsx"), filters);
+
+		Desktop.getDesktop().open(outputDirectory);
 	}
 
 	
-	
+	private static List<FilterCriteria> create2016Filters() {
+		List<FilterCriteria> filters = Lists.newLinkedList();
+		filters.add(FilterCriteria.createKata(Gender.MALE, 1, 3000, Level.LOWER_STAGE));
+//		filters.add(FilterCriteria.createKata(Gender.MALE, 1, 3000, Level.UPPER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.FEMALE, 1, 3000, Level.LOWER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.FEMALE, 1, 3000, Level.UPPER_STAGE));
+
+		filters.add(FilterCriteria.createKumite(Gender.MALE, 0, 3000, 0, 100, Level.LOWER_STAGE, ""));
+//		filters.add(FilterCriteria.createKumite(Gender.MALE, 0, 3000, 0, 100, Level.UPPER_STAGE, ""));
+		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 0, 3000, 0, 100, Level.LOWER_STAGE, ""));
+		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 0, 3000, 0, 100, Level.UPPER_STAGE, ""));
+
+
+		return filters;
+	}
 	
 	private static List<FilterCriteria> create2015Filters() {
 		List<FilterCriteria> filters = Lists.newLinkedList();
