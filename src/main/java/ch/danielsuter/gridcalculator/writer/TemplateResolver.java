@@ -24,4 +24,8 @@ public class TemplateResolver {
 	public GroupSheetTemplate getGroupSheetTemplate() {
 		return new GroupSheetTemplate(new File(BASE_PATH, "Gruppenformular.xlsx"));
 	}
+
+	public RankingTemplate getRankingTemplate() {
+		return new RankingTemplate(new File(BASE_PATH, "rangliste.xlsx"));
+	}
 }

@@ -56,9 +56,9 @@ public class RankingTemplate {
 
     private void writeParticipants(List<Participant> participants) {
         for (int i = 0; i < participants.size(); i++) {
-            Participant participant = participants.get(0);
+            Participant participant = participants.get(i);
 
-            Row row = templateSheet.createRow(currentRow);
+            Row row = templateSheet.createRow(currentRow++);
             Cell rankingCell = row.createCell(0, Cell.CELL_TYPE_STRING);
             rankingCell.setCellValue(calculateRanking(i));
 
@@ -68,27 +68,31 @@ public class RankingTemplate {
 
             Cell clubCell = row.createCell(2, Cell.CELL_TYPE_STRING);
             clubCell.setCellValue(participant.getClub());
-            currentRow++;
-        }
 
+        }
+        currentRow++;
     }
 
-    private String calculateRanking(int i) {
+    private String calculateRanking(int rowIndex) {
         String rang;
-        switch (i) {
+        switch (rowIndex) {
             case 0:
-                rang = "1";
+                rang = "1.";
                 break;
             case 1:
-                rang = "2";
+                rang = "2.";
                 break;
             case 2:
             case 3:
-                rang = "3";
+                rang = "3.";
                 break;
             default:
                 rang = "";
         }
         return rang;
+    }
+
+    public Workbook getWorkbook() {
+        return templateWorkbook;
     }
 }

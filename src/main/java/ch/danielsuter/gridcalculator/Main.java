@@ -11,6 +11,7 @@ import ch.danielsuter.gridcalculator.filter.ParticipantsFilter;
 import ch.danielsuter.gridcalculator.model.Group;
 import ch.danielsuter.gridcalculator.model.Level;
 import ch.danielsuter.gridcalculator.model.Participant;
+import ch.danielsuter.gridcalculator.writer.ExcelWriter;
 import org.apache.commons.io.FileUtils;
 
 import com.google.common.collect.Lists;
@@ -31,8 +32,11 @@ public class Main {
 		ParticipantsFilter participantsFilter = new ParticipantsFilter();
 		Iterable<Group> groups = participantsFilter.createGroups(participants, filters);
 
-		DrawingCalculator calculator = new DrawingCalculator(outputDirectory.getAbsolutePath());
-		calculator.calculateGrid(groups);
+        ExcelWriter writer = new ExcelWriter();
+        writer.writeRanking(groups, new File(outputDirectory, "rangliste.xlsx"));
+
+        //DrawingCalculator calculator = new DrawingCalculator(outputDirectory.getAbsolutePath());
+		//calculator.calculateGrid(groups);
 
 		Desktop.getDesktop().open(outputDirectory);
 	}

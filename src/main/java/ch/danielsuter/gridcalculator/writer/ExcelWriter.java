@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import ch.danielsuter.gridcalculator.model.Group;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.util.IOUtils;
 
@@ -27,7 +28,23 @@ public class ExcelWriter {
 			}
 		}
 
-		Workbook workbook = template.getWorkbook();
+		writeExcel(destination, template.getWorkbook());
+	}
+
+	public void writeGroupSheet(Iterable<Participant> participants, FilterCriteria criteria, File destination) {
+		GroupSheetTemplate template = templateResolver.getGroupSheetTemplate();
+		template.setParticipants(participants, criteria);
+		writeExcel(destination, template.getWorkbook());
+	}
+
+	public void writeRanking(Iterable<Group> groups, File destination) {
+		RankingTemplate template = templateResolver.getRankingTemplate();
+		template.setGroups(groups);
+		writeExcel(destination, template.getWorkbook());
+	}
+
+
+	private void writeExcel(File destination, Workbook workbook) {
 		FileOutputStream outputStream = null;
 		try {
 			outputStream = new FileOutputStream(destination);
@@ -39,23 +56,6 @@ public class ExcelWriter {
 		}
 	}
 
-
-	public void writeGroupSheet(Iterable<Participant> participants, FilterCriteria criteria, File destination) {
-		GroupSheetTemplate template = templateResolver.getGroupSheetTemplate();
-		template.setParticipants(participants, criteria);
-
-		Workbook workbook = template.getWorkbook();
-		FileOutputStream outputStream = null;
-		try {
-			outputStream = new FileOutputStream(destination);
-			workbook.write(outputStream);
-		} catch (IOException e) {
-			throw new RuntimeException("Failed to write to " + destination.getAbsolutePath());
-		} finally {
-			IOUtils.closeQuietly(outputStream);
-		}
-	}
-	
 	private boolean isMarked(Participant participant, String clubToBeMarked) {
 		return participant.getClub().equals(clubToBeMarked);
 	}
