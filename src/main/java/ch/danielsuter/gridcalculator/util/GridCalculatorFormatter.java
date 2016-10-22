@@ -30,24 +30,34 @@ public class GridCalculatorFormatter {
 
 	private static String formatForKumiteGroupSheetHeader(FilterCriteria criteria) {
 		String levelString = criteria.getLevel() == null ? ""  : " " + criteria.getLevel().toGerman();
-		
+
 		if(criteria.getWeightString() == null) {
-			return String.format("%s %s%s %d-%d", criteria.getFightType().toCamelCase(), criteria
-					.getGender().toGerman(), levelString, criteria.getFromYear(), criteria.getToYear() - 1);
+			return String.format("%s %s%s %s", criteria.getFightType().toCamelCase(), criteria
+					.getGender().toGerman(), levelString, createYear(criteria));
 		} else {
-			return String.format("%s %s%s %d-%d %s", criteria.getFightType().toCamelCase(), criteria
-					.getGender().toGerman(), levelString, criteria.getFromYear(), criteria.getToYear() - 1,
+			return String.format("%s %s%s %s %s", criteria.getFightType().toCamelCase(), criteria
+					.getGender().toGerman(), levelString, createYear(criteria),
 					criteria.getWeightString());
 		}
 	}
 
 	private static String formatForKataGroupSheetHeader(FilterCriteria filterCriteria) {
-		return String.format("%s %s %s %d-%d", filterCriteria.getFightType().toCamelCase(), filterCriteria
-				.getGender().toGerman(), filterCriteria.getLevel().toGerman(), filterCriteria.getFromYear(),
-				filterCriteria.getToYear() - 1);
+		return String.format("%s %s %s %s", filterCriteria.getFightType().toCamelCase(), filterCriteria
+				.getGender().toGerman(), filterCriteria.getLevel().toGerman(), createYear(filterCriteria));
 	}
 
-	/**
+    private static String createYear(FilterCriteria filterCriteria) {
+        int from = filterCriteria.getFromYear();
+        int to = filterCriteria.getToYear() - 1;
+
+        if(from == to) {
+            return String.valueOf(from);
+        } else {
+            return from + "-" + to;
+        }
+    }
+
+    /**
 	 * Formats a given filter criteria like this:<br>
 	 * <b>Kata</b> kata-male-2000_2002-unterstufe-group<br>
 	 * <b>Kumite</b> kumite-female-1999_2002-schwer-drawing<br>

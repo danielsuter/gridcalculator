@@ -11,6 +11,7 @@ import ch.danielsuter.gridcalculator.model.Participant;
 
 public class GridCalculatorFormatterTest {
 
+
 	@Test
 	public void formatForGroupSheetHeaderKata() {
 		String result = GridCalculatorFormatter.formatForGroupSheetHeader(FilterCriteria.createKata(Gender.MALE, 2000,
@@ -19,11 +20,24 @@ public class GridCalculatorFormatterTest {
 	}
 
 	@Test
+	public void formatForGroupSheetHeaderKataSingleYear() {
+		String result = GridCalculatorFormatter.formatForGroupSheetHeader(FilterCriteria.createKata(Gender.MALE, 2000,
+				2001, Level.LOWER_STAGE));
+		assertEquals("Kata Knaben Unterstufe 2000", result);
+	}
+
+	@Test
 	public void formatForGroupSheetHeaderKumite() {
 		String result = GridCalculatorFormatter.formatForGroupSheetHeader(FilterCriteria.createKumite(Gender.MALE,
 				2000, 2003, 0, 0, "leicht"));
 		assertEquals("Kumite Knaben 2000-2002 leicht", result);
+	}
 
+	@Test
+	public void formatForGroupSheetHeaderKumiteSingleYear() {
+		String result = GridCalculatorFormatter.formatForGroupSheetHeader(FilterCriteria.createKumite(Gender.MALE,
+				2000, 2001, 0, 0, "leicht"));
+		assertEquals("Kumite Knaben 2000 leicht", result);
 	}
 	
 	@Test
