@@ -7,7 +7,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import ch.danielsuter.gridcalculator.filter.ParticipantsFilter;
+import ch.danielsuter.gridcalculator.model.Group;
 import ch.danielsuter.gridcalculator.model.Level;
+import ch.danielsuter.gridcalculator.model.Participant;
 import org.apache.commons.io.FileUtils;
 
 import com.google.common.collect.Lists;
@@ -21,13 +24,15 @@ public class Main {
 		File outputDirectory = Files.createTempDirectory("tournamentGrids").toFile();
 		System.out.println(outputDirectory);
 
-		DrawingCalculator calculator = new DrawingCalculator(outputDirectory.getAbsolutePath());
-		
 		List<FilterCriteria> filters = create2016Filters();
-		
-		//calculator.calculateGrid(new File("F:\\development\\temp\\testliste\\teilnehmer.xlsx"), filters);
-		// C:\Users\suter\Google Drive\Tomokai Turnier Lenzburg\2015\Anmeldung
-		calculator.calculateGrid(new File("C:\\Users\\dsu\\Documents\\Shinseikan\\Anmeldelisten\\teilnehmer.xlsx"), filters);
+
+		ParticipantsReader reader = new ParticipantsReader();
+		Iterable<Participant> participants = reader.readParticipantsFromExcel(new File("C:\\Users\\dsu\\Documents\\Shinseikan\\Anmeldelisten\\teilnehmer.xlsx"));
+		ParticipantsFilter participantsFilter = new ParticipantsFilter();
+		Iterable<Group> groups = participantsFilter.createGroups(participants, filters);
+
+		DrawingCalculator calculator = new DrawingCalculator(outputDirectory.getAbsolutePath());
+		calculator.calculateGrid(groups);
 
 		Desktop.getDesktop().open(outputDirectory);
 	}
