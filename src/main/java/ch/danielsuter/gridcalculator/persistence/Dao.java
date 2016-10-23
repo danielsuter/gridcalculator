@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public interface Dao<T> {
-	public void save(File destination, T objectToSave) throws IOException;
+	void save(File destination, T objectToSave) throws IOException;
 	
-	public T load(File input) throws FileNotFoundException;
+	T load(File input) throws FileNotFoundException;
 }

@@ -5,7 +5,7 @@ public enum GridSize {
 
 	private final int size;
 
-	private GridSize(int size) {
+	GridSize(int size) {
 		this.size = size;
 	}
 

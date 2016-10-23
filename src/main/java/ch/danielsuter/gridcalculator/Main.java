@@ -28,15 +28,15 @@ public class Main {
 		List<FilterCriteria> filters = create2016Filters();
 
 		ParticipantsReader reader = new ParticipantsReader();
-		Iterable<Participant> participants = reader.readParticipantsFromExcel(new File("C:\\Users\\dsu\\Documents\\Shinseikan\\Anmeldelisten\\teilnehmer.xlsx"));
+		Iterable<Participant> participants = reader.readParticipantsFromExcel(new File("C:\\Users\\suter\\Google Drive\\Tomokai Turnier Lenzburg\\2016\\Anmeldelisten\\teilnehmer.xlsx"));
 		ParticipantsFilter participantsFilter = new ParticipantsFilter();
 		Iterable<Group> groups = participantsFilter.createGroups(participants, filters);
 
         ExcelWriter writer = new ExcelWriter();
         writer.writeRanking(groups, new File(outputDirectory, "rangliste.xlsx"));
 
-        //DrawingCalculator calculator = new DrawingCalculator(outputDirectory.getAbsolutePath());
-		//calculator.calculateGrid(groups);
+        DrawingCalculator calculator = new DrawingCalculator(outputDirectory.getAbsolutePath());
+		calculator.calculateGrid(groups);
 
 		Desktop.getDesktop().open(outputDirectory);
 	}

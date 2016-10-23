@@ -12,7 +12,7 @@ public enum GCFileFilter {
 	private String description;
 	private String extension;
 
-	private GCFileFilter(String description, String extension) {
+	GCFileFilter(String description, String extension) {
 		this.description = description;
 		this.extension = extension;
 	}
@@ -27,14 +27,8 @@ public enum GCFileFilter {
 
 			@Override
 			public boolean accept(File f) {
-				if (f.isDirectory()) {
-					return true;
-				}
-				if (f.getName().endsWith(extension)) {
-					return true;
-				}
+				return f.isDirectory() || f.getName().endsWith(extension);
 
-				return false;
 			}
 		};
 	}

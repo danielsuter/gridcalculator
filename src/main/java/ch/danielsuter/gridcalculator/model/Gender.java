@@ -6,7 +6,7 @@ public enum Gender {
 
 	private final String german;
 
-	private Gender(String german) {
+	Gender(String german) {
 		this.german = german;
 	}
 

@@ -1,17 +1,17 @@
 package ch.danielsuter.gridcalculator.filter;
 
-import java.util.HashSet;
-import java.util.List;
-
 import ch.danielsuter.gridcalculator.model.Group;
 import ch.danielsuter.gridcalculator.model.Level;
 import ch.danielsuter.gridcalculator.model.Participant;
 import ch.danielsuter.gridcalculator.util.MyLogger;
-
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class ParticipantsFilter {
 	private final static MyLogger logger = MyLogger.getLogger(ParticipantsFilter.class);
@@ -52,39 +52,37 @@ public class ParticipantsFilter {
 			for (Participant participant : participants) {
 				missingParticipants.append("\t").append(participant.toString()).append("\n");
 			}
-			throw new IllegalArgumentException("Filtercriteria does not match all participants:\n"
-					+ missingParticipants);
+			String errorMessage = "Filtercriteria does not match all participants:\n"
+					+ missingParticipants;
+			throw new IllegalArgumentException(errorMessage);
+//			logger.warn(errorMessage);
 		}
 	}
 
 	private Iterable<Participant> filter(Iterable<Participant> participants, final FilterCriteria criteria) {
-		return Iterables.filter(participants, new Predicate<Participant>() {
-
-			public boolean apply(Participant participant) {
-
-				if (!participant.getFightTypes().contains(criteria.getFightType())) {
-					return false;
-				} else if (isRelevant(criteria.getFromWeight()) && participant.getWeight() < criteria.getFromWeight()) {
-					return false;
-				} else if (isRelevant(criteria.getToWeight()) && participant.getWeight() >= criteria.getToWeight()) {
-					return false;
-				} else if (participant.getGender() != criteria.getGender()) {
-					return false;
-				} else if (isRelevant(criteria.getLevel())
-						&& Level.createFromKyu(participant.getKyu()) != criteria.getLevel()) {
-					return false;
-				} else if (participant.getYear() < criteria.getFromYear()) {
-					return false;
-				} else if (participant.getYear() >= criteria.getToYear()) {
-					return false;
-				}
-
-				return true;
+		return StreamSupport.stream(participants.spliterator(), false).filter(participant -> {
+			if (!participant.getFightTypes().contains(criteria.getFightType())) {
+				return false;
+			} else if (isRelevant(criteria.getFromWeight()) && participant.getWeight() < criteria.getFromWeight()) {
+				return false;
+			} else if (isRelevant(criteria.getToWeight()) && participant.getWeight() >= criteria.getToWeight()) {
+				return false;
+			} else if (participant.getGender() != criteria.getGender()) {
+				return false;
+			} else if (isRelevant(criteria.getLevel())
+					&& Level.createFromKyu(participant.getKyu()) != criteria.getLevel()) {
+				return false;
+			} else if (participant.getYear() < criteria.getFromYear()) {
+				return false;
+			} else if (participant.getYear() >= criteria.getToYear()) {
+				return false;
 			}
 
-			private boolean isRelevant(Object value) {
-				return value != null;
-			}
-		});
+			return true;
+		}).collect(Collectors.toList());
+	}
+
+	private boolean isRelevant(Object value) {
+		return value != null;
 	}
 }

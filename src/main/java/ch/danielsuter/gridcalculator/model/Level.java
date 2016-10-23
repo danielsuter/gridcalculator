@@ -13,7 +13,7 @@ public enum Level {
 		}
 	}
 
-	private Level(String german) {
+	Level(String german) {
 		this.german = german;
 	}
 

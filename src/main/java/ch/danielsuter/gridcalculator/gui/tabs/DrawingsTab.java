@@ -38,6 +38,7 @@ import ch.danielsuter.gridcalculator.model.Grid;
 import ch.danielsuter.gridcalculator.model.Group;
 import ch.danielsuter.gridcalculator.util.GridCalculatorFormatter;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class DrawingsTab extends JPanel implements Observer<MainModel>, ActionListener {
 
 	private static final long serialVersionUID = 1L;
