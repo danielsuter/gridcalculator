@@ -15,6 +15,11 @@ import java.util.stream.StreamSupport;
 
 public class ParticipantsFilter {
 	private final static MyLogger logger = MyLogger.getLogger(ParticipantsFilter.class);
+	private boolean throwErrorOnNotMatchedParticipant;
+
+	public ParticipantsFilter(boolean throwErrorOnNotMatchedParticipant) {
+		this.throwErrorOnNotMatchedParticipant = throwErrorOnNotMatchedParticipant;
+	}
 
 	public Iterable<Group> createGroups(Iterable<Participant> participants, Iterable<FilterCriteria> filterCriteria) {
 		List<Group> groups = Lists.newLinkedList();
@@ -54,8 +59,11 @@ public class ParticipantsFilter {
 			}
 			String errorMessage = "Filtercriteria does not match all participants:\n"
 					+ missingParticipants;
-			throw new IllegalArgumentException(errorMessage);
-//			logger.warn(errorMessage);
+			if(throwErrorOnNotMatchedParticipant) {
+				throw new IllegalArgumentException(errorMessage);
+			} else {
+				logger.warn(errorMessage);
+			}
 		}
 	}
 

@@ -16,7 +16,7 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 public class ParticipantsFilterTest extends TestBase {
-	private ParticipantsFilter filter = new ParticipantsFilter();
+	private ParticipantsFilter filter = new ParticipantsFilter(true);
 
 	@Test
 	public void createGroupsForGenderAndFightType() {

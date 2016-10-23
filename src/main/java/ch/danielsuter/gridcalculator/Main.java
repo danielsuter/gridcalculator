@@ -29,7 +29,7 @@ public class Main {
 
 		ParticipantsReader reader = new ParticipantsReader();
 		Iterable<Participant> participants = reader.readParticipantsFromExcel(new File("C:\\Users\\suter\\Google Drive\\Tomokai Turnier Lenzburg\\2016\\Anmeldelisten\\teilnehmer.xlsx"));
-		ParticipantsFilter participantsFilter = new ParticipantsFilter();
+		ParticipantsFilter participantsFilter = new ParticipantsFilter(false);
 		Iterable<Group> groups = participantsFilter.createGroups(participants, filters);
 
         ExcelWriter writer = new ExcelWriter();
@@ -44,7 +44,11 @@ public class Main {
 	
 	private static List<FilterCriteria> create2016Filters() {
 		List<FilterCriteria> filters = Lists.newLinkedList();
-		filters.add(FilterCriteria.createKata(Gender.MALE, 1, 3000, Level.LOWER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.MALE, 2000, 2005, Level.LOWER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.MALE, 2005, 2007, Level.LOWER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.MALE, 2007, 2008, Level.LOWER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.MALE, 2008, 2009, Level.LOWER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.MALE, 2009, 2012, Level.LOWER_STAGE));
 //		filters.add(FilterCriteria.createKata(Gender.MALE, 1, 3000, Level.UPPER_STAGE));
 		filters.add(FilterCriteria.createKata(Gender.FEMALE, 1, 3000, Level.LOWER_STAGE));
 		filters.add(FilterCriteria.createKata(Gender.FEMALE, 1, 3000, Level.UPPER_STAGE));

@@ -70,7 +70,7 @@ public class MainController {
 			throw new RuntimeException("No filters found");
 		}
 
-		ParticipantsFilter participantsFilter = new ParticipantsFilter();
+		ParticipantsFilter participantsFilter = new ParticipantsFilter(true);
 		ParticipantsReader participantsReader = new ParticipantsReader();
 		GridCalculator gridCalculator = new GridCalculator();
 		Iterable<FilterCriteria> filters = model.getFilters();

@@ -22,7 +22,7 @@ public class DrawingCalculator {
 	private static final String EXCEL_EXTENSION = ".xlsx";
 
 	private ParticipantsReader reader = new ParticipantsReader();
-	private ParticipantsFilter filter = new ParticipantsFilter();
+	private ParticipantsFilter filter = new ParticipantsFilter(true);
 	private GridCalculator gridCalculator = new GridCalculator();
 	private ExcelWriter writer = new ExcelWriter();
 	private String outputDirectory;
