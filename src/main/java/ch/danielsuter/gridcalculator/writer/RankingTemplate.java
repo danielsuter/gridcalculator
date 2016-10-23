@@ -1,20 +1,21 @@
 package ch.danielsuter.gridcalculator.writer;
 
 import ch.danielsuter.gridcalculator.filter.FilterCriteria;
+import ch.danielsuter.gridcalculator.model.Gender;
 import ch.danielsuter.gridcalculator.model.Group;
 import ch.danielsuter.gridcalculator.model.Participant;
 import ch.danielsuter.gridcalculator.util.GridCalculatorFormatter;
 import com.google.common.base.Preconditions;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class RankingTemplate {
     private Workbook templateWorkbook;
@@ -35,7 +36,20 @@ public class RankingTemplate {
     }
 
     public void setGroups(Iterable<Group> groups) {
-        for (Group group : groups) {
+        // TODO Sortierung
+        List<Group> sortedGroups = StreamSupport.stream(groups.spliterator(), false)
+                .sorted((group1, group2) -> {
+                    Gender gender1 = group1.getFilterCriteria().getGender();
+                    Gender gender2 = group2.getFilterCriteria().getGender();
+                    if(gender1 == Gender.FEMALE && gender2 == Gender.MALE) {
+                        return 1;
+                    }
+
+                    return 0;
+                })
+                .collect(Collectors.toList());
+
+        for (Group group : sortedGroups) {
             writeGroup(group);
         }
     }
@@ -50,6 +64,10 @@ public class RankingTemplate {
         Row row = templateSheet.createRow(currentRow);
         Cell cell = row.createCell(0, Cell.CELL_TYPE_STRING);
         cell.setCellValue(value);
+
+        CellStyle style = templateWorkbook.createCellStyle();
+        style.cloneStyleFrom(cell.getCellStyle());
+        // TODO grosse blaue Schrift
 
         currentRow++;
     }
