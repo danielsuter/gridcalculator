@@ -49,15 +49,20 @@ public class Main {
 		filters.add(FilterCriteria.createKata(Gender.MALE, 2007, 2008, Level.LOWER_STAGE));
 		filters.add(FilterCriteria.createKata(Gender.MALE, 2008, 2009, Level.LOWER_STAGE));
 		filters.add(FilterCriteria.createKata(Gender.MALE, 2009, 2012, Level.LOWER_STAGE));
-//		filters.add(FilterCriteria.createKata(Gender.MALE, 1, 3000, Level.UPPER_STAGE));
-		filters.add(FilterCriteria.createKata(Gender.FEMALE, 1, 3000, Level.LOWER_STAGE));
-		filters.add(FilterCriteria.createKata(Gender.FEMALE, 1, 3000, Level.UPPER_STAGE));
 
-		filters.add(FilterCriteria.createKumite(Gender.MALE, 0, 3000, 0, 100, Level.LOWER_STAGE, ""));
-//		filters.add(FilterCriteria.createKumite(Gender.MALE, 0, 3000, 0, 100, Level.UPPER_STAGE, ""));
-		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 0, 3000, 0, 100, Level.LOWER_STAGE, ""));
-		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 0, 3000, 0, 100, Level.UPPER_STAGE, ""));
+		filters.add(FilterCriteria.createKata(Gender.FEMALE, 2003, 2006, Level.LOWER_STAGE));
+		filters.add(FilterCriteria.createKata(Gender.FEMALE, 2006, 2008, Level.LOWER_STAGE));
+		// 1 Absagen mit JG 2010
 
+		filters.add(FilterCriteria.createKata(Gender.MIXED, 2001, 2005, Level.UPPER_STAGE));
+		// 1 Absagen mit JG 2006
+
+		filters.add(FilterCriteria.createKumite(Gender.MALE, 2004, 2007, 0, 100, ""));
+		filters.add(FilterCriteria.createKumite(Gender.MALE, 2007, 2009, 0, 100, ""));
+
+		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 2003, 2006, 25, 45, "leicht"));
+		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 2003, 2006, 45, 100, "schwer"));
+		filters.add(FilterCriteria.createKumite(Gender.FEMALE, 2006, 2008, 25, 100, ""));
 
 		return filters;
 	}
