@@ -13,6 +13,13 @@ public class GridCalculatorFormatterTest {
 
 
 	@Test
+	public void formatForGroupSheetHeaderKataMixed() {
+		String result = GridCalculatorFormatter.formatForGroupSheetHeader(FilterCriteria.createKata(Gender.MIXED, 2000,
+				2003, Level.LOWER_STAGE));
+		assertEquals("Kata Gemischt Unterstufe 2000-2002", result);
+	}
+
+	@Test
 	public void formatForGroupSheetHeaderKata() {
 		String result = GridCalculatorFormatter.formatForGroupSheetHeader(FilterCriteria.createKata(Gender.MALE, 2000,
 				2003, Level.LOWER_STAGE));
@@ -65,6 +72,13 @@ public class GridCalculatorFormatterTest {
 		String result = GridCalculatorFormatter.formatForFilename(
 				FilterCriteria.createKumite(Gender.FEMALE, 1999, 2003, 0, 0, "schwer"), "drawing");
 		assertEquals("kumite-female-1999_2002-schwer-drawing", result);
+	}
+
+	@Test
+	public void formatForFilenameDrawingMixed() {
+		String result = GridCalculatorFormatter.formatForFilename(
+				FilterCriteria.createKumite(Gender.MIXED, 1999, 2003, 0, 0, "schwer"), "drawing");
+		assertEquals("kumite-mixed-1999_2002-schwer-drawing", result);
 	}
 
 	@Test

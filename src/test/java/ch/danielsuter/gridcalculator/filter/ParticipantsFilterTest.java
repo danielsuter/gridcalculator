@@ -2,6 +2,8 @@ package ch.danielsuter.gridcalculator.filter;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import ch.danielsuter.gridcalculator.TestBase;
@@ -17,6 +19,39 @@ import com.google.common.collect.Lists;
 
 public class ParticipantsFilterTest extends TestBase {
 	private ParticipantsFilter filter = new ParticipantsFilter(true);
+
+
+	@Test
+	public void createGroups_KataMixed() {
+		List<Participant> participants = new ArrayList<>();
+		participants.add(new Participant("vorname1", "nachname1", 2000, 8, null, Gender.MALE, true, false, "club1"));
+		participants.add(new Participant("vorname2", "nachname2", 2000, 8, null, Gender.MALE, true, false, "club1"));
+		participants.add(new Participant("vorname3", "nachname3", 2000, 8, null, Gender.FEMALE, true, false, "club1"));
+		participants.add(new Participant("vorname4", "nachname4", 2000, 8, null, Gender.MALE, true, false, "club1"));
+
+		List<FilterCriteria> criteria = new ArrayList<>();
+		criteria.add(FilterCriteria.createKata(Gender.MIXED, 0, Integer.MAX_VALUE, Level.LOWER_STAGE));
+
+		Iterable<Group> groups = filter.createGroups(participants, criteria);
+
+		assertEquals(1, Iterables.size(groups));
+	}
+
+	@Test
+	public void createGroups_KumiteMixed() {
+		List<Participant> participants = new ArrayList<>();
+		participants.add(new Participant("vorname1", "nachname1", 2000, 8, 1d, Gender.MALE, false, true, "club1"));
+		participants.add(new Participant("vorname2", "nachname2", 2000, 8, 1d, Gender.MALE, false, true, "club1"));
+		participants.add(new Participant("vorname3", "nachname3", 2000, 8, 1d, Gender.FEMALE, false, true, "club1"));
+		participants.add(new Participant("vorname4", "nachname4", 2000, 8, 1d, Gender.MALE, false, true, "club1"));
+
+		List<FilterCriteria> criteria = new ArrayList<>();
+		criteria.add(FilterCriteria.createKumite(Gender.MIXED, 0, Integer.MAX_VALUE, 0, 2d, null));
+
+		Iterable<Group> groups = filter.createGroups(participants, criteria);
+
+		assertEquals(1, Iterables.size(groups));
+	}
 
 	@Test
 	public void createGroupsForGenderAndFightType() {

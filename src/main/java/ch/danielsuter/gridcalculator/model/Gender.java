@@ -2,7 +2,8 @@ package ch.danielsuter.gridcalculator.model;
 
 public enum Gender {
 	MALE("Knaben"), 
-	FEMALE("Mädchen");
+	FEMALE("Mädchen"),
+	MIXED("Gemischt");
 
 	private final String german;
 

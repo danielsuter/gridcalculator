@@ -1,5 +1,6 @@
 package ch.danielsuter.gridcalculator.filter;
 
+import ch.danielsuter.gridcalculator.model.Gender;
 import ch.danielsuter.gridcalculator.model.Group;
 import ch.danielsuter.gridcalculator.model.Level;
 import ch.danielsuter.gridcalculator.model.Participant;
@@ -75,7 +76,7 @@ public class ParticipantsFilter {
 				return false;
 			} else if (isRelevant(criteria.getToWeight()) && participant.getWeight() >= criteria.getToWeight()) {
 				return false;
-			} else if (participant.getGender() != criteria.getGender()) {
+			} else if (criteria.getGender() != Gender.MIXED && participant.getGender() != criteria.getGender()) {
 				return false;
 			} else if (isRelevant(criteria.getLevel())
 					&& Level.createFromKyu(participant.getKyu()) != criteria.getLevel()) {
